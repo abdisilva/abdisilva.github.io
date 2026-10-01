@@ -1,0 +1,134 @@
+/* ==========================================================================
+   1. Resets e Configurações Gerais
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o rodapé fique no final se houver pouco conteúdo */
+}
+
+/* ==========================================================================
+   2. Cabeçalho (Header)
+   ========================================================================== */
+.main-header {
+    background-color: #1a1a2e;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00f2fe;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #00f2fe;
+}
+
+/* ==========================================================================
+   3. Conteúdo Principal e Centralização do Logo
+   ========================================================================== */
+.main-content {
+    flex: 1; /* Faz o conteúdo ocupar o espaço disponível verticalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem;
+}
+
+/* Container centralizado usando Flexbox direcionado em coluna */
+.hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente todos os itens filhos */
+    text-align: center;   /* Centraliza o alinhamento dos textos */
+    max-width: 600px;
+}
+
+/* Estilização do Logo Centralizado */
+.center-logo {
+    max-width: 380px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    /* Efeito suave caso queira adicionar interatividade futura */
+    transition: transform 0.3s ease;
+}
+
+.center-logo:hover {
+    transform: scale(1.05);
+}
+
+.hero-container h1 {
+    font-size: 2.5rem;
+    color: #1a1a2e;
+    margin-bottom: 1rem;
+}
+
+.hero-container p {
+    font-size: 1.2rem;
+    color: #666666;
+}
+
+/* ==========================================================================
+   4. Rodapé (Footer)
+   ========================================================================== */
+.main-footer {
+    background-color: #11111d;
+    color: #aaaaaa;
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-container a {
+    color: #00f2fe;
+    text-decoration: none;
+}
+
+.footer-container a:hover {
+    text-decoration: underline;
+}
