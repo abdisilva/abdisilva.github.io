@@ -210,13 +210,24 @@
 ### US15 — Bloqueio de Repetição de Tema Encerrado (`RF15`)
 * **Como** sistema de avaliação,
 * **Quero** impedir que um tema já respondido ou encerrado seja aberto ou submetido novamente na mesma tentativa,
-* **Para** garantir a integridade da pontuação.
+* **Para** garantir a integridade da pontuação e evitar múltiplas tentativas na mesma questão.
 * **Tasks Vinculadas:** `T044`, `T045`
 
-#############################################################
-#############################################################
-#############################################################
-#############################################################
+**Critérios de Aceitação:**
+* **Cenário 1: Bloqueio de nova submissão no back-end**
+  * **Dado** que um tema já possui status de respondido ou encerrado na certificação atual,
+  * **Quando** uma nova requisição de resposta é enviada para a API referente àquele mesmo tema,
+  * **Então** o back-end deve rejeitar a submissão (retornando erro HTTP 403 ou 409) e manter inalterada a resposta original registrada.
+* **Cenário 2: Bloqueio de reabertura e navegação na interface**
+  * **Dado** que o candidato já finalizou um tema na tentativa em andamento,
+  * **Quando** tenta acessar novamente a tela daquele tema (seja pelo botão "Voltar" do navegador ou pela URL direta),
+  * **Então** o front-end deve desabilitar os controles de resposta e redirecionar o candidato para o próximo tema pendente ou para o painel da certificação.
+* **Cenário 3: Exibição de aviso de tema encerrado**
+  * **Dado** que o candidato tenta interagir com um tema já concluído,
+  * **Quando** o bloqueio é acionado,
+  * **Então** o sistema deve exibir uma mensagem clara informando que este tema já foi encerrado e não pode ser respondido novamente.
+
+---
 
 ### US16 — Cálculo da Nota Final (`RF16`)
 * **Como** sistema de avaliação,
