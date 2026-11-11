@@ -213,78 +213,95 @@
 * **Para** garantir a integridade da pontuação.
 * **Tasks Vinculadas:** `T044`, `T045`
 
+#############################################################
+#############################################################
+#############################################################
+#############################################################
+
+### US16 — Cálculo da Nota Final (`RF16`)
+* **Como** sistema de avaliação,
+* **Quero** calcular automaticamente a nota final no back-end assim que os 12 temas forem concluídos,
+* **Para** determinar o percentual de aproveitamento do candidato.
+* **Tasks Vinculadas:** `T048`, `T049`, `T050`
+
 **Critérios de Aceitação:**
-
-
-
-
-
-######################################################
-######################################################
-
-# Backlog do Produto - User Stories
-**Projeto:** [Nome do Projeto / Tech0wl-2026/projects/7]
+* **Dado** que o candidato finalizou o 12º tema da certificação,
+* **Quando** o último status é persistido,
+* **Então** o back-end deve calcular a porcentagem de acertos ($\frac{\text{Acertos}}{12} \times 100$), salvar o resultado final e marcar a tentativa como concluída.
 
 ---
 
-## Épica 1: Autenticação e Gestão de Usuários
+### US17 — Elegibilidade para Emissão de Certificado (`RF17`)
+* **Como** sistema de certificação,
+* **Quero** liberar a emissão do certificado apenas para candidatos que atingirem aproveitamento mínimo de 65%,
+* **Para** assegurar que somente candidatos aprovados recebam o documento.
+* **Tasks Vinculadas:** `T051`, `T053`
 
-### US01: Cadastro de Usuário
-* **Como** novo usuário,
-* **Eu quero** criar uma conta na plataforma utilizando meu e-mail e senha,
-* **Para que** eu possa acessar os recursos restritos do sistema.
-
-**Critérios de Aceite:**
-- [ ] O formulário deve validar e-mails com formato válido.
-- [ ] A senha deve conter no mínimo 8 caracteres, incluindo números e letras.
-- [ ] Um e-mail de confirmação deve ser disparado após o cadastro.
-- [ ] Em caso de sucesso, o usuário é redirecionado para a tela de login ou dashboard.
-
-### US02: Login e Logout
-* **Como** usuário cadastrado,
-* **Eu quero** fazer login com minhas credenciais,
-* **Para que** eu possa navegar de forma segura na minha conta.
-
-**Critérios de Aceite:**
-- [ ] Tela de login com campos de e-mail/usuário e senha.
-- [ ] Mensagem de erro clara para credenciais inválidas.
-- [ ] Botão de "Esqueci minha senha" funcional.
-- [ ] Botão de logout visível que encerra a sessão e redireciona para a página inicial.
+**Critérios de Aceitação:**
+* **Cenário 1: Aprovação ($\ge 65\%$)**
+  * **Dado** que o candidato concluiu a prova com 8 ou mais acertos ($\ge 66,6\%$),
+  * **Quando** acessa a tela de resultado,
+  * **Então** o sistema deve exibir o status "Aprovado" e habilitar o botão para gerar/visualizar o certificado.
+* **Cenário 2: Reprovação ($< 65\%$)**
+  * **Dado** que o candidato concluiu a prova com 7 ou menos acertos ($\le 58,3\%$),
+  * **Quando** acessa a tela de resultado,
+  * **Então** o sistema deve exibir o status "Não Aprovado", ocultar a emissão de certificado e permitir uma nova tentativa futura.
 
 ---
 
-## Épica 2: Core do Produto / Funcionalidade Principal
+### US18 — Geração, Exibição e Exportação do Certificado (`RF18`)
+* **Como** candidato aprovado,
+* **Quero** visualizar meu certificado eletrônico contendo meus dados, nota, data de emissão, código identificador e QR Code, além de poder exportá-lo,
+* **Para** comprovar minha certificação profissionalmente.
+* **Tasks Vinculadas:** `T055`, `T056`, `T057`, `T058`, `T059`, `T061`
 
-### US03: Visualização do Dashboard
-* **Como** usuário autenticado,
-* **Eu quero** visualizar um painel principal com os principais indicadores/dados,
-* **Para que** eu tenha uma visão geral rápida do sistema.
-
-**Critérios de Aceite:**
-- [ ] O dashboard deve carregar em menos de 2 segundos.
-- [ ] Exibição de cards com métricas principais.
-- [ ] Design responsivo (compatível com desktop e mobile).
-
-### US04: Criação de Registros (CRUD - Create)
-* **Como** usuário,
-* **Eu quero** criar um novo item/registro na plataforma,
-* **Para que** eu possa gerenciar meus dados.
-
-**Critérios de Aceite:**
-* [ ] Formulário intuitivo com validação de campos obrigatórios.
-* [ ] Feedback visual (notificação/toast) após a criação bem-sucedida.
-* [ ] O novo item aparece imediatamente na listagem geral.
+**Critérios de Aceitação:**
+* **Dado** que sou um candidato aprovado na certificação,
+* **Quando** acesso a visualização do meu certificado,
+* **Então** devo ver meu nome completo, CPF (mascarado conforme LGPD), percentual de acerto, data de conclusão, hash/código único de validação, QR Code apontando para a URL pública de verificação e opção de impressão/exportação em PDF.
 
 ---
 
-## Épica 3: Configurações e Perfil
+### US19 — Validação Pública do Certificado (`RF19`)
+* **Como** recrutador ou terceiro interessado,
+* **Quero** acessar uma página pública e consultar a autenticidade de um certificado através do seu código identificador (ou QR Code),
+* **Para** confirmar se o documento apresentado pelo candidato é verdadeiro.
+* **Tasks Vinculadas:** `T062`, `T063`, `T093`
 
-### US05: Edição de Perfil
-* **Como** usuário,
-* **Eu quero** editar minhas informações pessoais (nome, foto, senha),
-* **Para que** meu perfil esteja sempre atualizado.
+**Critérios de Aceitação:**
+* **Cenário 1: Certificado autêntico**
+  * **Dado** que acesso a página pública de validação e informo um código válido (ou escaneio o QR Code),
+  * **Quando** realizo a consulta,
+  * **Então** o sistema deve exibir que o certificado é válido, mostrando o nome do candidato, data de emissão e nota obtida.
+* **Cenário 2: Código inexistente**
+  * **Dado** que informo um identificador inválido ou adulterado,
+  * **Quando** submeto a consulta,
+  * **Então** o sistema deve informar que nenhum certificado foi encontrado para o código informado.
 
-**Critérios de Aceite:**
-- [ ] Página de configurações de perfil acessível via menu principal.
-- [ ] Possibilidade de alterar a senha atual exigindo a confirmação da senha antiga.
-- [ ] Salvamento de alterações com confirmação na interface.
+---
+
+### US20 — Registro de Histórico de Respostas (`RF20`)
+* **Como** candidato,
+* **Quero** que o sistema grave o histórico detalhado das minhas respostas em cada certificação realizada,
+* **Para** poder consultar meu desempenho por tema posteriormente.
+* **Tasks Vinculadas:** `T064`, `T093`, `T107`
+
+**Critérios de Aceitação:**
+* **Dado** que finalizei ou estou realizando uma certificação,
+* **Quando** acesso a área de "Histórico",
+* **Então** devo visualizar a lista de tentativas realizadas com data, pontuação obtida e o detalhamento de quais temas acertei ou errei.
+
+---
+
+### US21 — Acompanhamento de Progresso na Certificação (`RF21`)
+* **Como** candidato em avaliação,
+* **Quero** visualizar claramente quais dos 12 temas já foram concluídos e quais ainda estão pendentes,
+* **Para** acompanhar meu avanço ao longo da prova.
+* **Tasks Vinculadas:** `T065`, `T068`, `T069`, `T070`, `T071`
+
+**Critérios de Aceitação:**
+* **Dado** que estou no painel da certificação em andamento,
+* **Quando** visualizo a barra ou lista de progresso,
+* **Então** o sistema deve distinguir visualmente os temas já concluídos (respondidos/encerrados) dos temas pendentes, exibindo o contador (ex: `5 de 12 temas concluídos`).
+
+---
